@@ -117,11 +117,12 @@ const Page = () => {
       <div className="col presta">
         <h3>Notre derniére prestation</h3>
         <EventCard
-          imageSrc={last?.cover}
+          imageSrc="link"
+          imageAlt={last?.id}
           title={last?.title}
-          date={new Date(last?.date)}
+          date={last?.date}
           small
-          label="boom"
+          label={last?.id}
         />
       </div>
       <div className="col contact">
