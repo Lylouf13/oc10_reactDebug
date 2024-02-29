@@ -120,7 +120,7 @@ const Page = () => {
         {last !== null &&
           <EventCard
             imageSrc={last?.cover}
-            imageAlt=""
+            imageAlt={last?.description}
             title={last?.title}
             date={new Date(last?.date)}
             small
