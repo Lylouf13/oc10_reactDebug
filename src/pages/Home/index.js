@@ -118,6 +118,7 @@ const Page = () => {
       <div className="col presta">
         <h3>Notre derniére prestation</h3>
         {last !== null &&
+        last !== undefined &&
           <EventCard
             imageSrc={last?.cover}
             imageAlt={last?.description}
