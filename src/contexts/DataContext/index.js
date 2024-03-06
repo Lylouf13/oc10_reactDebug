@@ -21,6 +21,7 @@ export const DataProvider = ({ children }) => {
   const [data, setData] = useState(null);
   const [last, setLast] = useState(null);
   const getData = useCallback(async () => {
+
     try {
       setData(await api.loadData());
     } catch (err) {
@@ -29,14 +30,14 @@ export const DataProvider = ({ children }) => {
   }, []);
   useEffect(() => {
     if (data){
-      const key = Object.keys(data.events).pop()
-      const obj = data.events[key]
-      setLast(obj)
+      if(data.events){
+        setLast(data.events[data.events.length-1])
+      }
       return;
     } 
     getData();
   });
-  
+
   return (
     <DataContext.Provider
       // eslint-disable-next-line react/jsx-no-constructed-context-values
