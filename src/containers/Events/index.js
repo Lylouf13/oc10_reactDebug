@@ -13,15 +13,30 @@ const EventList = () => {
   const { data, error } = useData();
   const [type, setType] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const filteredEvents = (
-    (!type
-      ? data?.events
-      : data?.events) || []
-  ).filter((event, index) => {
-    if ((currentPage - 1) * PER_PAGE <= index && PER_PAGE * currentPage > index && !type ? type === null : event.type === type){
+
+  // const filteredEvents = (data?.events || []).filter((event) => {
+  //   if (!type ? type === null : type === event.type){
+  //     return true;
+  //   }
+  //   return false;
+  // }).filter((_, index) => { 
+  //   if((currentPage - 1) * PER_PAGE <= index && PER_PAGE * currentPage > index){
+  //     return true
+  //   }
+  //   return false
+  // });
+
+  const filteredEvents = (data?.events || []).filter((event) => {
+    if (!type ? type === null : type === event.type){
       return true;
     }
     return false;
+  })
+  const displayedEvents = (filteredEvents || []).filter((_, index) => { 
+    if((currentPage - 1) * PER_PAGE <= index && PER_PAGE * currentPage > index){
+      return true
+    }
+    return false
   });
 
   const changeType = (evtType) => {
@@ -29,8 +44,11 @@ const EventList = () => {
     setType(evtType);
   };
 
-  const pageNumber = Math.floor((filteredEvents?.length || 0) / PER_PAGE) + 1;
+  const pageNumber = (filteredEvents?.length || 0)%PER_PAGE === 0 ? 
+    Math.floor((filteredEvents?.length || 0)/ PER_PAGE) : 
+    Math.floor(((filteredEvents?.length || 0)/ PER_PAGE)+1);
   const typeList = new Set(data?.events.map((event) => event.type));
+
   return (
     <>
       {error && <div>An error occured</div>}
@@ -45,7 +63,7 @@ const EventList = () => {
           />
 
           <div id="events" className="ListContainer">
-            {filteredEvents.map((event) => (
+            {displayedEvents.map((event) => (
               <Modal key={`event-${event.id}`} Content={<ModalEvent event={event} />}>
                 {({ setIsOpened }) => (
                   <EventCard
