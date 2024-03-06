@@ -16,6 +16,7 @@ const EventList = () => {
 
   // Version en un seul bloc (pas de gestion du nombre de pages, donc potentiellement cassé au niveau du nombre de pages, ça doit être faisable de l'implémenter proprement ceci dit)
 
+  // ---------------------------------------------
   // const filteredEvents = (data?.events || []).filter((event) => {
   //   if (!type ? type === null : type === event.type){
   //     return true;
@@ -27,11 +28,13 @@ const EventList = () => {
   //   }
   //   return false
   // });
+  // ---------------------------------------------
 
   //
-  // Versions en Deux blocs, 
+  // v Versions en Deux blocs v
   // -- ça me permet d'utiliser filteredEvents indépendemment pour générer le nombre de pages nécessaires en fonction du nombre d'éléments triés
   // -- displayedEvent récupère 9 éléments dans filteredEvents en fonction de currentPage(index = 0-8 pour currentPage =1, index = 9-17 pour currentPage=2 etc...)
+  // -- et il est utilisé après en .map pour générer les éléments
 
   const filteredEvents = (data?.events || []).filter((event) => {
     if (!type ? type === null : type === event.type){
@@ -51,6 +54,7 @@ const EventList = () => {
     setType(evtType);
   };
 
+  // Definit la quantite de pages a generer pour la categorie
   const pageNumber = (filteredEvents?.length || 0)%PER_PAGE === 0 ? 
     Math.floor((filteredEvents?.length || 0)/ PER_PAGE) : 
     Math.floor(((filteredEvents?.length || 0)/ PER_PAGE))+1;
