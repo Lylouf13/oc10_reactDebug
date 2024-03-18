@@ -30,8 +30,11 @@ export const DataProvider = ({ children }) => {
   }, []);
   useEffect(() => {
     if (data){
-      if(data.events){
-        setLast(data.events[data.events.length-1])
+      const sortByDate = data?.events.sort((evtA, evtB) =>
+      new Date(evtB.date) < new Date(evtA.date)
+      )
+      if(sortByDate){
+        setLast(sortByDate[sortByDate.length-1])
       }
       return;
     } 
