@@ -30,14 +30,13 @@ export const DataProvider = ({ children }) => {
   }, []);
   useEffect(() => {
     if (data){
-      if(data.events){
-        const byDateDesc = data?.events.sort((evtA, evtB) =>
-        new Date(evtB.date) < new Date(evtA.date)? 1:-1
-        )
-        if(byDateDesc){
-          setLast(byDateDesc[byDateDesc.length-1])
+      const sorter=[]
+      sorter.push(...data.events)
+        if (sorter){
+          sorter.sort((evtA, evtB) =>
+          new Date(evtB.date) < new Date(evtA.date)? 1:-1)
+          setLast(sorter[sorter.length-1])
         }
-      }
       return;
     } 
     getData();
